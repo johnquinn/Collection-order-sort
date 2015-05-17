@@ -1,0 +1,27 @@
+var samples = workspace.samples;
+var numOfSamples = samples.length;
+
+/* Iterate over all samples */
+for (var i=0; i<numOfSamples; i++) 
+{
+/* show each samples name and cytometer in console */
+console.log("sample is: " + samples[i].name + ' ' + samples[i].keywords['$CYT']);
+
+if (samples[i].keywords['$CYT'] == 'FACSCanto' ) /* check Cytometer */
+{
+var date = samples[i].keywords['$DATE'];
+console.log("$date keyword is " + date);
+var year = date.substring(11, 7); /* start after 7th character, end at 11th */
+var month = date.substring(6, 3);
+if (month == 'JUN') /* change date text into sortable date number */
+{
+month = '06';
+}
+var day = date.substring(2, 0);
+var collectionDate = (year + month + day + " " + samples[i].keywords['$BTIM']);
+
+/* create CDATE keyword and assign it the sortable collection date value */
+samples[i].keywords['CDATE'] = collectionDate;
+console.log("cdate keyword is: " + samples[i].keywords['CDATE']);
+}
+}
